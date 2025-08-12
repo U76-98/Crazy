@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fruit Inventory Manager</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            text-align: center;
+            padding-top: 50px;
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #555;
+        }
+
+        input {
+            padding: 10px;
+            width: 250px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px 15px;
+            margin: 5px;
+            border: none;
+            background-color: #007BFF;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #fruitList {
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: #007BFF;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Inventory Manager</h1>
+        <input id="fruitInput" placeholder="Enter Fruits">
+        <br>
+        <button onclick="addFruit()">Add</button>
+        <button onclick="deleteFruit()">Delete</button>
+        <button onclick="findFruit()">Find</button>
+        <button onclick="showInventory()">Inventory</button>
+        <h2 id="fruitList"></h2>
+    </div>
+    
+    <script>
+        var fruits = [];
+        var inputElement = document.getElementById("fruitInput");
+        var fruitListElement = document.getElementById("fruitList");
+
+        function addFruit() {
+            var fruitName = inputElement.value.trim();
+            if (fruitName === '') {
+                alert("Please enter a fruit name.");
+            } else {
+                fruits.push(fruitName);
+                inputElement.value = '';
+                alert(`"${fruitName}" has been added to inventory.`);
+            }
+        }
+
+        function deleteFruit() {
+            var fruitName = inputElement.value.trim();
+            var fruitIndex = fruits.indexOf(fruitName);
+            
+            if (fruitIndex !== -1) {
+                fruits.splice(fruitIndex, 1);
+                inputElement.value = '';
+                alert(`"${fruitName}" has been deleted from inventory.`);
+            } else {
+                alert("No such fruit exists in inventory.");
+            }
+        }
+        
+        function findFruit() {
+            var searchTerm = inputElement.value.trim();
+            
+            if (searchTerm === '') {
+                alert("Please enter a search term.");
+                return;
+            }
+
+            var foundFruits = fruits.filter(fruit => fruit.includes(searchTerm));
+            
+            if (foundFruits.length > 0) {
+                fruitListElement.textContent = "Found: " + foundFruits.join(', ');
+            } else {
+                fruitListElement.textContent = `No fruits found matching "${searchTerm}".`;
+            }
+        }
+
+        function showInventory() {
+            if (fruits.length > 0) {
+                fruitListElement.textContent = "Current Inventory: " + fruits.join(', ');
+            } else {
+                fruitListElement.textContent = "Inventory is empty.";
+            }
+        }
+    </script>
+</body>
+</html>
